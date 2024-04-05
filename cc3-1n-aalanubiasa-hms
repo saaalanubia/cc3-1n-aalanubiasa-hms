@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+
+namespace CC3_1N_HMS
+{
+
+public enum UserType
+{
+    Receptionist,
+    Guest
+}
+
+public enum RoomStyle
+{
+    TwinRoom,
+    QueenRoom,
+    KingRoom
+}
+
+public enum RoomStatus
+{
+    Available,
+    Booked
+}
+
+public class User
+{
+    public int UserID { get; set; }
+    public string UserName { get; set; }
+    public string Address { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public UserType UserType { get; set; }
+    public Account UserAccount { get; set; }
+}
+
+public class Account
+{
+    public int AccountID { get; set; }
+    public string Password { get; set; }
+}
+
+public class Guest : User
+{
+    public int TotalRoomsBooked { get; set; }
+}
+
+public class Receptionist : User
+{
+}
+
+public class Room
+{
+    public int RoomNumber { get; set; }
+    public RoomStyle Style { get; set; }
+    public RoomStatus Status { get; set; }
+    public double BookingPrice { get; set; }
+}
+
+public class Hotel
+{
+    public string Name { get; set; }
+    public HotelLocation Location { get; set; }
+    public List<Room> Rooms { get; set; }
+}
+
+public class HotelLocation
+{
+    public string Location { get; set; }
+}
+
+public class RoomBooking
+{
+    public int ReservationNumber { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
+    public int DurationInDays { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+      
+        User user1 = new Guest
+        {
+            UserID = 1,
+            UserName = "Terry",
+            UserType = UserType.Guest,
+            Address = "Addr 1",
+            Email = "terry@email.com",
+            PhoneNumber = "63919129",
+            TotalRoomsBooked = 0,
+            UserAccount = new Account { AccountID = 1, Password = "guestpassword" }
+        };
+
+        User user2 = new Receptionist
+        {
+            UserID = 2,
+            UserName = "Anna",
+            UserType = UserType.Receptionist,
+            Address = "Addr 2",
+            Email = "anna@email.com",
+            PhoneNumber = " 67890",
+            UserAccount = new Account { AccountID = 2, Password = "receptionistpassword" }
+        };
+
+        Room room1 = new Room { RoomNumber = 101, Style = RoomStyle.TwinRoom, Status = RoomStatus.Available, BookingPrice = 1500.00 };
+        Room room2 = new Room { RoomNumber = 102, Style = RoomStyle.KingRoom, Status = RoomStatus.Available, BookingPrice = 3000.00 };
+
+        List<Room> yananRooms = new List<Room> { room1, room2 };
+        Hotel yananHotel = new Hotel { Name = "Hotel Yanan", Location = new HotelLocation { Location = "123 GStreet, Takaw City" }, Rooms = hotelRooms };
+        List<Room> hotel456Rooms = new List<Room> { room1, room2 };
+        Hotel hotel456 = new Hotel { Name = "Hotel 456", Location = new HotelLocation { Location = "Session Road, Baguio City" }, Rooms = hotelRooms };
+        
+
+    
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = DateTime.Now.AddDays(3);
+        int reservationNumber = 12345;
+        RoomBooking booking = new RoomBooking { ReservationNumber = reservationNumber, StartTime = startTime, EndTime = endTime, DurationInDays = 3 };
+
+        Console.WriteLine("Room booked successfully with reservation number: " + booking.ReservationNumber);
+    }
+    
+}
+}
+   
